@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="es">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Together We Play</title>
+
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/jquery-ui.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/tema/miestilo.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/styleBar.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <style>
+        .navbar > div {
+    margin-right: 10px;
+    }
+    </style>
+
+</head>
+<body>
+<header th:fragment="header">
+    <nav class="navbar" data-bs-theme="dark">
+        <div class="nav-logo-link nav-progressive-attribute">
+            <a th:href="@{/}"><img src="imagen/MisticoDiverBlanco.png" height="52" width="92" alt="Logo"></a>
+        </div>
+
+        <!--div class="nav-search">
+            <input type="text" placeholder="Buscar" class="search-input">
+            <div class="search-icon">
+                <span class="material-symbols-outlined">search</span>
+            </div>
+        </div-->
+
+        <div class="nav-search">
+            <form th:action="@{/producto/resultados-busqueda}" method="get">
+                <input type="text" name="query" placeholder="Buscar" class="search-input">
+                <div type="submit" class="search-icon">
+                    <span class="material-symbols-outlined">search</span>
+                </div>
+            </form>
+        </div>
+
+        <div class="sign-in">
+            <a sec:authorize="!isAuthenticated()" class="nav-item" href="/login">
+                <span>Hola, bienvenid@</span>
+                <p>Inicia sesión</p>
+            </a>
+        </div>
+
+        <div class="returns">
+            <a sec:authorize="isAuthenticated()" class="nav-item" href="/">
+                <p>Hola  <span th:text="${#authentication.name}"></span></p>
+            </a>
+        </div>
+
+        <div class="returns">
+            <a sec:authorize="isAuthenticated()" th:href="@{/historial}">
+                <span>Pedidos</span>
+            </a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/historial/vacio}">
+                <span>Pedidos</span>
+            </a>
+        </div>
+
+
+        <div class="cart">
+            <a sec:authorize="isAuthenticated()" class="nav-item" th:href="@{/carrito}">
+                <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+            </a>
+            <a sec:authorize="!isAuthenticated()" class="nav-item" th:href="@{/carrito/vacio}">
+                <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+            </a>
+            <p>Carrito</p>
+        </div>
+
+
+        <div class="form-group mb-3">
+            <a sec:authorize="isAuthenticated()" class="nav-item">
+                <form class="link" th:action="@{/doLogout}" method="post">
+                    <button class="btn btn-primary centrar" type="submit" value="Logout">
+                        <a>Cerrar sesión</a>
+                    </button>
+                </form>
+            </a>
+        </div>
+    </nav>
+    </br>
+
+    <!-- div class="container-fluid  text-center">
+        <div class="row">
+            <div class="col-lg-2 navbar bg-dark">
+                <a class="navbar navbar-brand" style="color:white" th:href="@{/}">TWP</a>
+            </div>
+            <div class="col navbar navbar-expand-lg navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown4">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                               id="navbarDropdownMenuLink4" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Cliente</a>
+                            <ul class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" th:href="@{/cliente/lista-cliente}">Buscar Cliente</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/cliente/alta-cliente}">Alta Cliente</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown5">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                               id="navbarDropdownMenuLink5" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Domicilios</a>
+                            <ul class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" th:href="@{/domicilio/lista-domicilio}">Buscar domicilio</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/domicilio/alta-domicilio}">Alta domicilio</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown6">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                               id="navbarDropdownMenuLink6" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                            <ul class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" th:href="@{/producto/lista-producto}">Buscar producto</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/producto/alta-producto}">Alta producto</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown7">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                               id="navbarDropdownMenuLink7" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Métodos de pago</a>
+                            <ul class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" th:href="@{/metodoPago/lista-metodoPago}">Listar Métodos de pago</a>
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/metodoPago/alta-metodoPago}">Alta Método de pago</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-1 navbar bg-dark">
+                <a class="btn btn-outline-primary" th:href="@{/login}">Sesion</a>
+            </div>
+            <div class="col-lg-1 navbar bg-dark">
+                <form id="logout" th:action="@{/logout}" method=post>
+                    <button class="btn btn-outline-primary"
+                            onclick="document.getElementById('logout').submit();"
+                            type="submit">Cerrar Sesion
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div-->
+    <div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
+    <div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
+    <div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+    <div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+</header>
+
+<section class="hero-section"></section>
+
+
+<footer th:fragment="footer">
+    <div class="container text-center">
+        <br/> <img th:src="@{/imagen/Logo-Azul.png}" height="150" width="150"/> <!-- height="150" width="500" --->
+        <p>Dirección General de Cómputo y de Tecnologias de información y Comunicación</p>
+        <p>Together We Play</p>
+    </div>
+    <script th:src="@{/bootstrap/js/jquery-3.6.3.js}"></script>
+    <script th:src="@{/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/js/jquery-ui.min.js}"></script>
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="es">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Together We Play</title>
+
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/jquery-ui.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/tema/miestilo.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/styleBar.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <style>
+        .navbar > div {
+    margin-right: 10px;
+    }
+        .nav-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 500px; /* Ajusta este valor según necesites */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-icon {
+    padding: 10px;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon span {
+    font-size: 20px;
+}
+
+.search-icon:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+    </style>
+
+</head>
+<body>
+<header th:fragment="header">
+    <nav class="navbar" data-bs-theme="dark">
+        <div class="nav-logo-link nav-progressive-attribute">
+            <a th:href="@{/}"><img src="imagen/MisticoDiverBlanco.png" height="52" width="92" alt="Logo"></a>
+        </div>
+
+        <div class="nav-search">
+            <form th:action="@{/producto/resultados-busqueda}" method="get" class="search-form">
+                <input type="text" name="query" placeholder="Buscar" class="search-input">
+                <button type="submit" class="search-icon">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="sign-in">
+            <a sec:authorize="!isAuthenticated()" class="nav-item" href="/login">
+                <span>Hola, bienvenid@</span>
+                <p>Inicia sesión</p>
+            </a>
+        </div>
+
+        <div class="returns">
+            <a sec:authorize="isAuthenticated()" class="nav-item" href="/">
+                <p>Hola  <span th:text="${#authentication.name}"></span></p>
+            </a>
+        </div>
+
+        <div class="returns">
+            <a sec:authorize="isAuthenticated()" th:href="@{/historial}">
+                <span>Pedidos</span>
+            </a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/historial/vacio}">
+                <span>Pedidos</span>
+            </a>
+        </div>
+
+        <div class="cart">
+            <a sec:authorize="isAuthenticated()" class="nav-item" th:href="@{/carrito}">
+                <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+            </a>
+            <a sec:authorize="!isAuthenticated()" class="nav-item" th:href="@{/carrito/vacio}">
+                <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+            </a>
+            <p>Carrito</p>
+        </div>
+
+        <div class="form-group mb-3">
+            <a sec:authorize="isAuthenticated()" class="nav-item">
+                <form class="link" th:action="@{/doLogout}" method="post">
+                    <button class="btn btn-primary centrar" type="submit" value="Logout">
+                        <a>Cerrar sesión</a>
+                    </button>
+                </form>
+            </a>
+        </div>
+    </nav>
+    <br/>
+    <div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
+    <div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
+    <div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+    <div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+</header>
+<section class="hero-section"></section>
+<footer th:fragment="footer">
+    <div class="container text-center">
+        <br/>
+        <a href="/" target="_blank">
+            <img th:src="@{/imagen/Logo-Azul.png}" height="150" width="150"/>
+        </a>
+        <p>Dirección General de Cómputo y de Tecnologias de información y Comunicación</p>
+        <p>Together We Play</p>
+        <p>Todos los derechos reservados</p>
+        <p>Este sitio es propiedad de MisticoDiver</p>
+        <div class="social-media-links mt-4">
+            <a href="https://www.twitch.tv/misticodiver" target="_blank">
+                <img src="imagen/twitch.png" height="40" width="40" alt="Twitch">
+            </a>
+            <a href="https://www.facebook.com/MisticoDiver" target="_blank">
+                <img src="imagen/facebook.png" height="40" width="40" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com/misticodiver/" target="_blank">
+                <img src="imagen/instagram.png" height="40" width="40" alt="Instagram">
+            </a>
+        </div>
+        <br/>
+        <br/>
+    </div>
+    <script th:src="@{/bootstrap/js/jquery-3.6.3.js}"></script>
+    <script th:src="@{/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/js/jquery-ui.min.js}"></script>
+
+</footer>
+</body>
+</html>

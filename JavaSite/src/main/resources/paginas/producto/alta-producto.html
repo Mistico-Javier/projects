@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div class="card container px-4 text-center">
+        <h1 class="card-header"><strong><p th:text="${contenido}"></p></strong></h1>
+        <div class="card-body">
+            <form th:action="@{/producto/salvar-producto}" method="post">
+                <div class="row gx-5">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                   placeholder="Nombre del producto" required="required"
+                                   th:value="${producto.nombre}">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <input type="text" class="form-control" id="descripcion" name="descripcion"
+                                   placeholder="Descripción del producto" required
+                                   th:value="${producto.descripcion}">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="marca">Marca</label>
+                            <input type="text" class="form-control" id="marca" name="marca"
+                                   placeholder="Marca del producto" required
+                                   th:value="${producto.marca}">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="precio">Precio</label>
+                            <input type="text" class="form-control" id="precio" name="precio"
+                                   placeholder="Precio del producto. Ejemplo: 49.99" required
+                                   th:value="${producto.precio}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+                <input type="hidden" name="id" th:field="*{producto.id}"/>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>

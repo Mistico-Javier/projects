@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container">
+    <body>
+    </br>
+    </br>
+    <div class="container text-center">
+        <h2>Compra confirmada exitosamente!</h2>
+        <!--p>Fecha estimada de entrega estimada: <span th:text="${ticket.fecha_Entrega}"></span></p-->
+        <p>Fecha estimada de entrega: <span th:text="${#temporals.format(ticket.fecha_Entrega, 'dd/MM/yyyy')}"></span></p>
+    </div>
+    </br>
+    <div class="container text-center">
+        <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary centrar"><a href="/">Regresar al inicio</a></button>
+        </div>
+    </div>
+    </body>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>

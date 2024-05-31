@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <h1 th:text="${contenido}"></h1>
+    <table th:if="${!producto.isEmpty()}" class="table table-striped table-hover table-sm">
+        <thead class="table-dark table-bordered">
+        <tr>
+            <th scope="col">Nombre del producto</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Operaciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tp: ${producto}">
+            <td th:text="${tp.nombre}"></td>
+            <td th:text="${tp.descripcion}"></td>
+            <td th:text="${tp.marca}"></td>
+            <td th:text="${tp.precio}"></td>
+            <td>
+                <a th:href="@{/producto/modificar-producto/{id} (id=${tp.id})}"
+                   class="btn btn-success">Modificar <i class="fas fa-pen-nib"
+                                                        aria-hidden="true"></i></a>
+                <a th:href="@{/administrador/eliminar-administrador/{id} (id=${tp.id})}"
+                   class="btn btn-danger">Eliminar <i class="fas fa-trash-alt"
+                                                      aria-hidden="true"></i> </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav th:replace="~{plantillas/pag-nav::paginador}"></nav>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>

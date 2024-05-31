@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <h1 th:text="${contenido}"></h1>
+    <form th:action="@{/carrito/salvar-carrito}" th:object="${carrito}" method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cantidad">Cantidad del Producto en el Carrito</label>
+                    <input type="text" class="form-control" id="cantidad" name="cantidad"
+                           placeholder="Cantidad del Producto" required="required"
+                           th:value="${carrito.cantidad}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="producto">Producto</label>
+                    <select class="form-control" th:field="*{producto}" id="producto" name="producto" required="requiered">
+                        <option th:each="sel : ${selectProducto}" th:value="${sel.id}" th:text="'Producto: '+${sel.id} +' Nombre: '+${sel.nombre} +' Descripcion: '+${sel.descripcion}+' Marca: '+${sel.marca}+' Precio: '+${sel.precio}"/>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ticket">Ticket</label>
+                    <select class="form-control" th:field="*{ticket}" id="ticket" name="ticket" required="requiered">
+                        <option th:each="sel : ${selectTicket}" th:value="${sel.id}" th:text="'Fecha de compra: '+${sel.fecha_Compra}+' Total de la compra: '+${sel.total_Compra}"/>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <br/>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>

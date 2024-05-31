@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div class="card container px-4 text-center">
+        <h1 class="card-header"><strong><p th:text="${contenido}"></p></strong></h1>
+        <div class="card-body">
+            <form th:action="@{/metodoPago/salvar-metodoPago}" method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="metodoPago">Método de pago</label>
+                            <input type="text" class="form-control" id="metodoPago" name="metodoPago"
+                                   placeholder="Método de pago. Ejemplo: tapitas de Mirinda"
+                                   th:value="${metodoPago.metodoPago}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+                <input type="hidden" name="id" th:field="*{metodoPago.id}"/>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>

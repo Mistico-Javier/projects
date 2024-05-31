@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div class="card container px-4 text-center">
+        <h1 class="card-header"><strong><p th:text="${contenido}"></p></strong></h1>
+        <div class="card-body">
+            <form th:action="@{/administrador/salvar-administrador}" method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <input type="text" class="form-control" id="correo" name="correo"
+                                   placeholder="Correo del administrador"
+                                   th:value="${administrador.correo}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="text" class="form-control" id="password" name="password"
+                                   placeholder="Ejemplo: password1234"
+                                   th:value="${administrador.password}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+                <input type="hidden" name="id" th:field="*{administrador.id}"/>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>

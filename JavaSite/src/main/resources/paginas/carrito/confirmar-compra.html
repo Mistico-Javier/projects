@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}">
+    <title>Confirmar compra</title>
+</head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container">
+    <h1>Resumen de Compra</h1>
+    </br>
+    <h2>Productos Agregados:</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Precio Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${carrito}">
+            <td th:text="${item.producto.nombre}"></td>
+            <td th:text="${item.cantidad}"></td>
+            <td th:text="'$' + ${item.producto.precio}"></td>
+            <td th:text="'$' + ${item.producto.precio * item.cantidad}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <p><strong>Nombre del Usuario:</strong> <span th:text="${usuario.nombre}"></span></p>
+        <p><strong>Fecha de Compra:</strong> <span th:text="${#temporals.format(ticket.fecha_Compra, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Total de la Compra:</strong> <span th:text="'$' + ${ticket.total_Compra}"></span></p>
+        <p><strong>Método de Pago:</strong> <span th:text="${ticket.metodoPago.metodoPago}"></span></p>
+        <p><strong>Domicilio de Envío:</strong></p>
+        <p th:text="${domicilio.calle} + ', ' + ${domicilio.numero} + ', ' + ${domicilio.coloniaBarrio} + ', ' + ${domicilio.codigoPostal} + ', ' + ${domicilio.alcaldiaMunicipio} + ', ' + ${domicilio.estado}"></p>
+        <p><strong>Fecha estimada de entrega:</strong> <span th:text="${#temporals.format(ticket.fecha_Entrega, 'dd/MM/yyyy')}"></span></p>
+    </div>
+    </div>
+    <div class="button-container">
+        <form th:action="@{/carrito/modificar-domicilio}" method="get">
+            <input type="hidden" th:value="${domicilio.id}" name="id"/>
+            <button type="submit" class="btn btn-primary">Modificar Domicilio</button>
+        </form>
+        </br>
+        <form th:action="@{/carrito/confirmar-envio}" method="post">
+            <button type="submit" class="btn btn-success">Confirmar Compra</button>
+        </form>
+    </div>
+</main>
+<footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>
